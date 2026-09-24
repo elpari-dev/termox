@@ -1,0 +1,748 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Termox Roma</title><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#F6F4EF;--paper:#FFFFFF;--ink:#16181D;--ink2:#3D4047;--muted:#5B5F66;--line:#E2DED5;--sand:#EAE6DC;
+  --cold:#1F5FA8;--coldbg:#EEF3FA;--warm:#B4471A;--warmbg:#FBEFE8;--ok:#1F7A4D;
+  --display:'Bricolage Grotesque','Avenir Next',system-ui,sans-serif;--body:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:clamp(16px,5vw,64px)}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-0.02em}
+a{color:var(--cold)}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--cold);outline-offset:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border-radius:12px;border:none;background:var(--ink);color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.cold{background:var(--cold)}.btn.warm{background:var(--warm)}
+.btn.ghost{background:var(--paper);color:var(--ink);border:1px solid var(--ink)}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.check{display:flex;gap:10px;align-items:flex-start}
+.check svg{flex-shrink:0;margin-top:2px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ground);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;color:var(--ink);padding:0}
+.logo b{font-family:var(--display);font-weight:800;font-size:24px;letter-spacing:-0.02em}
+.logo small{font-size:13px;color:var(--muted)}
+.nav{display:flex;gap:28px;font-weight:500}
+.nav button{background:none;border:none;cursor:pointer;color:var(--ink);padding:6px 0}
+.phone{font-weight:600;font-size:15px;user-select:all}
+
+/* toggle */
+.toggle{display:inline-flex;gap:6px;background:var(--sand);padding:6px;border-radius:999px}
+.toggle button{border:none;cursor:pointer;padding:10px 20px;border-radius:999px;font-weight:600;font-size:15px;background:transparent;color:var(--ink2);min-height:44px}
+.toggle button[aria-pressed="true"]{color:#fff;font-weight:700}
+.toggle button[data-m="clima"][aria-pressed="true"]{background:var(--cold)}
+.toggle button[data-m="caldaia"][aria-pressed="true"]{background:var(--warm)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:center;padding-block:64px 72px}
+.hero h1{font-size:clamp(42px,6vw,76px);font-weight:800;line-height:.98;letter-spacing:-0.035em}
+.hero .lead{font-size:clamp(17px,1.6vw,21px);color:var(--ink2);max-width:36ch;margin:0}
+.hero-l{display:flex;flex-direction:column;gap:26px}
+.ticks{display:flex;flex-wrap:wrap;gap:12px 24px;font-weight:600;font-size:15px}
+.picker{background:var(--paper);border-radius:24px;padding:28px;box-shadow:0 1px 2px rgba(22,24,29,.06),0 12px 32px rgba(22,24,29,.08);display:flex;flex-direction:column;gap:14px}
+.picker h3{font-size:24px}
+.opt{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid #DAD6CC;border-radius:14px;background:var(--paper);cursor:pointer;text-align:left;color:var(--ink);width:100%}
+.opt[aria-pressed="true"]{border:2px solid var(--cold);background:var(--coldbg)}
+.opt span{display:flex;flex-direction:column}
+.opt strong{font-size:16px}.opt em{font-style:normal;font-size:13px;color:var(--muted)}
+.picker label{font-size:14px;font-weight:600}
+.picker input{height:50px;border:1px solid #C9C4B8;border-radius:12px;padding:0 16px;font:inherit;width:100%}
+
+/* promise band */
+.band{background:var(--ink);color:#F6F4EF;border-radius:20px;padding:28px 32px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.band b{display:block;font-size:17px;margin-bottom:4px}
+.band p{margin:0;font-size:14px;color:#C9C6BE}
+
+/* products */
+.sec{padding-block:88px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+.sec-head h2,.sec h2{font-size:clamp(34px,4vw,52px);font-weight:800;margin-top:10px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:14px;position:relative}
+.card.hot{border:2px solid var(--c)}
+.card .badge{position:absolute;top:-13px;left:28px;background:var(--c);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:5px 12px;border-radius:999px}
+.card .pic{height:140px;border-radius:14px;background:var(--cbg);display:flex;align-items:center;justify-content:center;gap:12px}
+.card h3{font-size:25px;font-weight:700}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.price{display:flex;align-items:baseline;gap:8px}
+.price span{color:var(--muted);font-size:15px}
+.price b{font-family:var(--display);font-weight:800;font-size:44px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.card small{color:var(--muted);font-size:13px}
+.card .btn{margin-top:auto;background:var(--c)}
+
+/* included */
+.incl{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px}
+.incl h2{font-size:clamp(32px,3.6vw,44px)}
+.incl-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 32px}
+
+/* steps */
+.steps-bg{background:var(--sand)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:40px}
+.step{background:var(--ground);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:12px}
+.step i{width:46px;height:46px;border-radius:999px;background:var(--ink);color:#fff;font-style:normal;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:21px}
+.step h3{font-size:24px;font-weight:700}
+.step p{margin:0;color:var(--ink2)}
+
+/* plus */
+.plus{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:48px;align-items:center}
+.plus-card{background:var(--ink);color:#F6F4EF;border-radius:24px;padding:34px;display:flex;flex-direction:column;gap:16px}
+.plus-card .price b{font-size:46px}.plus-card .price span{color:#C9C6BE}
+.plus-card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px}
+.plus-card .btn{background:#F6F4EF;color:var(--ink)}
+.plus-name{color:var(--cold)}
+
+.reviews{border:1px dashed #C9C4B8;border-radius:24px;background:var(--paper);padding:48px 24px;text-align:center}
+.reviews h3{font-size:26px}
+.reviews p{margin:6px 0 0;color:var(--muted)}
+
+.faq{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:48px}
+.faq details{border-top:1px solid #DAD6CC;padding:18px 0}
+.faq details:last-child{border-bottom:1px solid #DAD6CC}
+.faq summary{font-weight:700;font-size:18px;cursor:pointer}
+.faq details p{margin:10px 0 0;color:var(--ink2);max-width:62ch}
+
+footer{background:var(--ink);color:#C9C6BE;font-size:14px;margin-top:88px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:40px}
+footer b{font-family:var(--display);font-size:22px;color:#F6F4EF;margin-right:10px}
+
+/* flow pages */
+.progress{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--muted)}
+.progress strong{color:var(--ink)}
+.bar{width:min(320px,40vw);height:8px;background:var(--line);border-radius:999px}
+.bar div{height:8px;background:var(--cold);border-radius:999px}
+.flow{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:32px;padding-block:48px 72px;align-items:start}
+.flow h1{font-size:clamp(32px,3.6vw,44px);font-weight:800}
+.flow .sub{margin:8px 0 0;font-size:18px;color:var(--ink2)}
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:24px}
+.shot{background:var(--paper);border:1px dashed #A9A396;border-radius:18px;padding:18px;display:flex;gap:16px;align-items:center}
+.shot.done{border:2px solid var(--ok)}
+.shot .thumb{width:96px;height:96px;flex-shrink:0;border-radius:12px;background:#F1EEE7;display:flex;align-items:center;justify-content:center}
+.shot.done .thumb{background:#DDE7DF}
+.shot b{display:block;font-size:17px}
+.shot p{margin:4px 0 8px;font-size:14px;color:var(--muted)}
+.shot .state{font-size:13px;font-weight:700;color:var(--ok)}
+.shot label.up{display:inline-flex;border:1px solid var(--ink);border-radius:999px;padding:7px 16px;font-weight:600;font-size:14px;cursor:pointer;background:var(--paper)}
+.shot input{position:absolute;width:1px;height:1px;opacity:0}
+.note{display:flex;gap:12px;background:var(--coldbg);color:#1D3557;border-radius:16px;padding:16px 20px;margin-top:20px;font-size:15px}
+.flow-nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:16px}
+.linkbtn{background:none;border:none;color:var(--ink);font-weight:600;text-decoration:underline;cursor:pointer;padding:8px 0}
+.side{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:14px}
+.side h3{font-size:21px;font-weight:700}
+.row{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.row span:first-child{color:var(--muted)}.row span:last-child{font-weight:600;text-align:right}
+.hr{height:1px;background:var(--line)}
+.big{font-family:var(--display);font-weight:800;font-size:38px;font-variant-numeric:tabular-nums}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px;align-items:start}
+.tier{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.tier.sel{border:2px solid var(--cold)}
+.tier h3{font-size:23px;font-weight:700}
+.tier .m{font-size:14px;color:var(--muted)}
+.tier .big{font-size:38px}
+.tier .pill{align-self:flex-start;background:var(--cold);color:#fff;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px}
+.tier .check{font-size:14px}
+.tier button{margin-top:6px}
+.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.days button{display:flex;flex-direction:column;align-items:center;padding:10px 0;border-radius:12px;border:1px solid var(--line);background:var(--ground);cursor:pointer;color:var(--ink);min-height:56px}
+.days button small{font-size:12px}.days button b{font-size:19px}
+.days button[aria-pressed="true"]{background:var(--cold);color:#fff;border-color:var(--cold)}
+.fine{font-size:13px;color:var(--muted);margin:0}
+.demo{background:var(--ink);color:#F6F4EF;font-size:13px;text-align:center;padding:8px 16px}
+
+/* manutenzione */
+.cura-hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:end;padding-block:56px 48px}
+.cura-hero h1{font-size:clamp(38px,5vw,64px);font-weight:800;line-height:1;letter-spacing:-0.03em}
+.cura-hero h1 em{font-style:normal;color:var(--cold)}
+.cura-hero p{margin:0;font-size:18px;color:var(--ink2)}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch}
+.plan{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:14px;position:relative}
+.plan.hot{border:2px solid var(--ink)}
+.plan .badge{position:absolute;top:-13px;left:28px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:5px 12px;border-radius:999px}
+.plan h3{font-size:24px;font-weight:700}
+.plan .for{font-size:14px;color:var(--muted);margin:0}
+.plan .price b{font-size:42px}
+.plan .yr{font-size:13px;color:var(--muted)}
+.plan ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.plan .btn{margin-top:auto}
+.plan-ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center}
+.year{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:36px;border-top:2px solid var(--ink)}
+.year div{padding:18px 18px 0 0;display:flex;flex-direction:column;gap:6px}
+.year b{font-family:var(--display);font-size:20px}
+.year span.when{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.year p{margin:0;font-size:15px;color:var(--ink2)}
+.single{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px}
+.single div{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:6px}
+.single b{font-family:var(--display);font-size:30px;font-variant-numeric:tabular-nums}
+.single span{color:var(--muted);font-size:14px}
+.bollino{background:var(--coldbg);border-radius:24px;padding:36px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px}
+.bollino h2{font-size:clamp(28px,3vw,38px)}
+.bollino ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;color:#1D3557}
+
+/* domande */
+.qs{display:flex;flex-direction:column;gap:22px;margin-top:26px}
+.q b{display:block;font-size:17px;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid #C9C4B8;background:var(--paper);color:var(--ink);font-weight:600;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.warn{display:flex;gap:12px;background:var(--warmbg);color:#6B2A0F;border-radius:16px;padding:16px 20px;margin-top:22px;font-size:15px}
+/* risposte illustrate */
+.qh{margin:-4px 0 10px;font-size:14px;color:var(--muted);max-width:62ch}
+.ocards{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.ocard{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 10px;border:1px solid #C9C4B8;border-radius:16px;background:var(--paper);color:var(--ink2);cursor:pointer;min-height:44px;text-align:center}
+.ocard span{font-size:14px;font-weight:600;color:var(--ink)}
+.ocard:hover{border-color:var(--ink)}
+.ocard[aria-pressed="true"]{border:2px solid var(--ink);background:var(--sand);color:var(--ink)}
+.booked{display:flex;gap:12px;align-items:center;background:#DDE7DF;color:#154D33;border-radius:14px;padding:14px 18px;font-weight:600;margin-bottom:18px}
+/* chi installa */
+.who{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:center}
+.who-photo{aspect-ratio:4/5;max-width:100%;border-radius:24px;background:repeating-linear-gradient(135deg,#EAE6DC 0 14px,#E2DED5 14px 28px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);font-weight:600;text-align:center;padding:24px}
+.who-text{display:flex;flex-direction:column;gap:18px}
+.who h2{font-size:clamp(32px,4vw,48px);font-weight:800;line-height:1.04}
+.lead2{margin:0;font-size:18px;color:var(--ink2);max-width:52ch}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.facts div{border-top:2px solid var(--ink);padding-top:10px;display:flex;flex-direction:column;gap:2px}
+.facts b{font-family:var(--display);font-size:26px}
+.facts span{font-size:14px;color:var(--muted)}
+.creds{display:flex;flex-wrap:wrap;gap:8px}
+.creds span{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600}
+
+@media (max-width:980px){
+  .who{grid-template-columns:minmax(0,1fr)}
+  .who-photo{max-height:420px;aspect-ratio:auto;min-height:260px}
+  .cura-hero,.plans,.bollino{grid-template-columns:minmax(0,1fr)}
+  .year{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero,.incl,.plus,.faq,.flow{grid-template-columns:minmax(0,1fr)}
+  .cards,.steps,.tiers{grid-template-columns:minmax(0,1fr)}
+  .band{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nav{display:none}
+}
+@media (max-width:600px){
+  .band,.incl-list,.shots,.single,.year,.facts{grid-template-columns:minmax(0,1fr)}
+  .phone{display:none}
+  .hero{padding-block:36px 48px}
+  .sec{padding-block:60px}
+}
+@media (prefers-reduced-motion:no-preference){.view{animation:in .25s ease}}
+@keyframes in{from{opacity:.4}to{opacity:1}}
+</style>
+
+<div class="demo">Anteprima del progetto · prezzi indicativi, i campi tra [ ] sono da completare</div>
+
+<header class="top">
+  <div class="wrap">
+    <button class="logo" data-go="home" aria-label="Termox, torna alla home">
+      <svg width="28" height="28" viewBox="0 0 30 30" fill="none" aria-hidden="true"><circle cx="15" cy="15" r="13" stroke="#16181D" stroke-width="2.4"/><path d="M15 2 A13 13 0 0 1 15 28" fill="#1F5FA8"/><path d="M15 2 A13 13 0 0 0 15 28" fill="#B4471A"/></svg>
+      <b>Termox</b><small>Roma</small>
+    </button>
+    <nav class="nav" aria-label="Sezioni">
+      <button data-go="home" data-mode="clima" data-anchor="prodotti">Condizionatori</button>
+      <button data-go="home" data-mode="caldaia" data-anchor="prodotti">Caldaie</button>
+      <button data-go="cura">Manutenzione e bollino blu</button>
+      <button data-go="home" data-anchor="come">Come funziona</button>
+      <button data-go="home" data-anchor="chi">Chi installa</button>
+    </nav>
+    <div style="display:flex;align-items:center;gap:18px">
+      <span class="phone">06 [NUMERO]</span>
+      <button class="btn" data-go="domande">Calcola il prezzo</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<section class="view" id="v-home">
+  <div class="wrap hero">
+    <div class="hero-l">
+      <div class="toggle" role="group" aria-label="Scegli prodotto">
+        <button data-m="clima" aria-pressed="true">Condizionatori</button>
+        <button data-m="caldaia" aria-pressed="false">Caldaie</button>
+      </div>
+      <h1 id="hero-h"></h1>
+      <p class="lead">Rispondi a cinque domande e vedi subito il prezzo fisso, installazione compresa. Nessun sopralluogo, nessuna sorpresa il giorno dei lavori. Solo a Roma.</p>
+      <div class="ticks">
+        <span class="check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Prezzo fisso</span>
+        <span class="check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Tecnici certificati</span>
+        <span class="check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Anche a rate</span>
+        <span class="check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Pratiche detrazioni incluse</span>
+      </div>
+    </div>
+    <form class="picker" id="picker">
+      <h3>Cosa ti serve?</h3>
+      <button type="button" class="opt" aria-pressed="true" data-need="clima">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1F5FA8" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M4.9 6.5l14.2 11M4.9 17.5l14.2-11"/></svg>
+        <span><strong>Nuovo condizionatore</strong><em>Mono, dual o trialsplit</em></span>
+      </button>
+      <button type="button" class="opt" aria-pressed="false" data-need="caldaia">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B4471A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-8z"/></svg>
+        <span><strong>Sostituire la caldaia</strong><em>Condensazione o ibrida</em></span>
+      </button>
+      <button type="button" class="opt" aria-pressed="false" data-need="rip">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#16181D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/></svg>
+        <span><strong>Riparazione o manutenzione</strong><em>Guasto, bollino blu, pulizia clima</em></span>
+      </button>
+      <label for="cap">Il tuo CAP</label>
+      <input id="cap" inputmode="numeric" maxlength="5" placeholder="es. 00137" value="00137">
+      <button class="btn" type="submit">Vedi i prezzi in 60 secondi</button>
+    </form>
+  </div>
+
+  <div class="wrap">
+    <div class="band">
+      <div><b>Niente sopralluogo</b><p>Il prezzo lo vedi subito dalle tue risposte.</p></div>
+      <div><b>Il prezzo non cambia</b><p>Se dalle foto emerge un lavoro extra lo sai prima, e puoi annullare gratis.</p></div>
+      <div><b>Tecnici abilitati</b><p>Certificati F-Gas e DM 37/08, con dichiarazione di conformità.</p></div>
+      <div><b>Detrazioni pronte</b><p>Fattura, bonifico parlante e pratica ENEA li prepariamo noi.</p></div>
+    </div>
+  </div>
+
+  <div class="wrap sec" id="prodotti">
+    <div class="sec-head">
+      <div><div class="eyebrow">Prezzi fissi, installazione compresa</div><h2>Scegli da cosa partire</h2></div>
+      <div class="toggle" role="group" aria-label="Scegli prodotto">
+        <button data-m="clima" aria-pressed="true">Condizionatori</button>
+        <button data-m="caldaia" aria-pressed="false">Caldaie</button>
+      </div>
+    </div>
+    <div class="cards" id="cards"></div>
+  </div>
+
+  <div class="wrap incl" style="padding-bottom:88px">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <h2>Nel prezzo c'è già tutto.</h2>
+      <p style="margin:0;font-size:18px;color:var(--ink2)">Il prezzo che vedi online è quello che paghi. Se dalle foto emerge un lavoro fuori standard, ad esempio un motore sul tetto o una canna fumaria da rifare, te lo diciamo prima e puoi annullare senza costi.</p>
+    </div>
+    <div class="incl-list" id="incl"></div>
+  </div>
+
+  <div class="steps-bg" id="come">
+    <div class="wrap sec">
+      <h2>Come funziona</h2>
+      <div class="steps">
+        <div class="step"><i>1</i><h3>Rispondi e vedi il prezzo</h3><p>Cinque domande con i disegni, niente termini tecnici. Il prezzo fisso esce subito.</p></div>
+        <div class="step"><i>2</i><h3>Prenota e manda 4 foto</h3><p>Scegli modello e giorno, paghi l'acconto e mandi 4 foto dal telefono. Il tecnico le guarda e conferma.</p></div>
+        <div class="step"><i>3</i><h3>Il tecnico installa</h3><p>In mezza giornata per un monosplit o una caldaia. Collaudo e documenti il giorno stesso.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap sec" id="chi">
+    <div class="who">
+      <div class="who-photo">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#5B5F66" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <span>[Foto del tecnico al lavoro]</span>
+      </div>
+      <div class="who-text">
+        <div class="eyebrow">Chi installa</div>
+        <h2>[Nome Cognome], il tecnico dietro Termox.</h2>
+        <p class="lead2">[Due righe scritte da lui: da quanti anni fa questo lavoro, dove ha imparato e perché ha scelto di lavorare a prezzo fisso.]</p>
+        <div class="facts">
+          <div><b>[N] anni</b><span>di lavoro a Roma</span></div>
+          <div><b>[N]</b><span>impianti installati</span></div>
+          <div><b>[Marche]</b><span>centro assistenza autorizzato</span></div>
+        </div>
+        <div class="creds"><span>Patentino F-Gas</span><span>Abilitazione DM 37/08</span><span>Manutentore impianti termici</span><span>[Altre certificazioni]</span></div>
+        <p class="fine">Ogni lavoro lo esegue lui o un tecnico della sua squadra. Il giorno prima ti scriviamo nome e foto di chi viene a casa tua.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap sec plus" id="plus">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="eyebrow">Dopo l'installazione</div>
+      <h2><span class="plus-name">Termox+</span>: non pensi più a caldaia e condizionatori.</h2>
+      <p style="margin:0;font-size:18px;color:var(--ink2)">Un abbonamento che copre il controllo annuale della caldaia con bollino blu, la pulizia dei condizionatori prima dell'estate e l'intervento prioritario in caso di guasto.</p>
+    </div>
+    <div class="plus-card">
+      <div class="price"><span>da</span><b>4,90 €</b><span>al mese</span></div>
+      <ul>
+        <li>Controllo annuale caldaia e bollino blu</li>
+        <li>Sanificazione dei condizionatori ogni primavera</li>
+        <li>Ti avvisiamo noi e fissiamo noi l'appuntamento</li>
+        <li>Guasti con priorità, anche nei giorni di punta</li>
+      </ul>
+      <button class="btn" data-go="cura">Scopri i piani</button>
+    </div>
+  </div>
+
+  <div class="wrap"><div class="reviews"><h3>[Recensioni Google dei primi clienti]</h3><p>Da inserire dopo le prime installazioni.</p></div></div>
+
+  <div class="wrap sec faq">
+    <h2 style="font-size:clamp(32px,3.6vw,44px)">Domande frequenti</h2>
+    <div>
+      <details open><summary>Come fate a dare il prezzo senza vedere casa?</summary><p>Il prezzo lo calcoliamo dalle tue risposte. Dopo la prenotazione ci mandi 4 foto e il tecnico lo conferma. Se vede un lavoro extra ti chiamiamo prima: puoi accettare o annullare e riavere l'acconto.</p></details>
+      <details><summary>Posso detrarre la spesa?</summary><p>Molti interventi rientrano nelle detrazioni per la casa, fino al 50% sulla prima casa. Ti diciamo se il tuo rientra e prepariamo noi la documentazione.</p></details>
+      <details><summary>Serve il permesso del condominio per il motore esterno?</summary><p>Dipende dal regolamento del tuo condominio e dai vincoli dell'edificio. Nel questionario ti chiediamo di verificarlo.</p></details>
+      <details><summary>In quali zone lavorate?</summary><p>Roma e comuni vicini. Inserisci il CAP per vedere le date disponibili.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- DOMANDE -->
+<section class="view" id="v-domande" hidden>
+  <div class="wrap" style="padding-top:24px">
+    <div class="progress"><strong>Passo 1 di 3 · Le tue risposte</strong><div class="bar"><div style="width:33%"></div></div></div>
+  </div>
+  <div class="wrap flow">
+    <div>
+      <h1 id="q-title">Parlaci della casa</h1>
+      <p class="sub" id="q-sub"></p>
+      <div class="qs" id="qs"></div>
+      <div class="warn" id="q-warn" hidden></div>
+      <div class="flow-nav"><button class="linkbtn" data-go="home">Indietro</button><button class="btn" data-go="prezzo">Vedi il mio prezzo</button></div>
+    </div>
+    <aside class="side summary"></aside>
+  </div>
+</section>
+
+<!-- PREZZO -->
+<section class="view" id="v-prezzo" hidden>
+  <div class="wrap" style="padding-top:24px">
+    <div class="progress"><strong>Passo 2 di 3 · Prezzo e giorno</strong><div class="bar"><div style="width:66%"></div></div></div>
+  </div>
+  <div class="wrap flow">
+    <div>
+      <h1 id="p-title">Il tuo prezzo fisso</h1>
+      <p class="sub" id="p-sub"></p>
+      <div class="tiers" id="tiers"></div>
+      <p class="fine" id="p-extra" style="margin-top:16px" hidden></p>
+      <div class="flow-nav"><button class="linkbtn" data-go="domande">Cambia le risposte</button></div>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:18px">
+      <div class="side">
+        <h3>Scegli il giorno</h3>
+        <div class="days" id="days"></div>
+        <p class="fine">Fascia oraria: mattina 8–13 o pomeriggio 14–19</p>
+      </div>
+      <div class="side">
+        <h3>Riepilogo</h3>
+        <div class="row"><span id="sel-name"></span><span id="sel-price"></span></div>
+        <div class="row"><span>Installazione e materiali</span><span>inclusi</span></div>
+        <div class="row"><span>Smaltimento del vecchio</span><span>incluso</span></div>
+        <div class="row"><span>Documenti per detrazioni</span><span>inclusi</span></div>
+        <div class="row"><span>Acconto oggi</span><span>[€]</span></div>
+        <button class="btn" data-go="foto">Prenota l'installazione</button>
+        <p class="fine">Dopo la prenotazione ci mandi 4 foto dal telefono. Se il tecnico vede un lavoro extra ti chiama prima: puoi annullare e riavere l'acconto.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- FOTO DOPO LA PRENOTAZIONE -->
+<section class="view" id="v-foto" hidden>
+  <div class="wrap" style="padding-top:24px">
+    <div class="progress"><strong>Passo 3 di 3 · Foto per il tecnico</strong><div class="bar"><div style="width:100%"></div></div></div>
+  </div>
+  <div class="wrap flow">
+    <div>
+      <div class="booked"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span id="booked-txt">Prenotazione ricevuta.</span></div>
+      <h1>Ultimo passo: 4 foto per il tecnico</h1>
+      <p class="sub" id="f-sub"></p>
+      <div class="shots" id="shots"></div>
+      <div class="note"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F5FA8" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink:0"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>Non sei a casa adesso? Ti abbiamo scritto anche su WhatsApp: puoi rispondere con le foto entro 48 ore.</span></div>
+      <div class="flow-nav"><button class="linkbtn" data-go="prezzo">Cambia modello o giorno</button><button class="btn" id="send-photos">Invia le foto al tecnico</button></div>
+      <p class="fine" id="send-msg" style="margin-top:12px"></p>
+    </div>
+    <aside class="side" id="booking"></aside>
+  </div>
+</section>
+
+<!-- MANUTENZIONE -->
+<section class="view" id="v-cura" hidden>
+  <div class="wrap cura-hero">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="eyebrow">Termox+ · manutenzione in abbonamento</div>
+      <h1>Bollino blu e condizionatori puliti, <em>senza doverci pensare.</em></h1>
+    </div>
+    <p>Ti avvisiamo noi quando scade il controllo, fissiamo noi l'appuntamento e mandiamo lo stesso tecnico ogni anno. Paghi un piccolo importo al mese e, se qualcosa si rompe, passi davanti.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="plans">
+      <article class="plan">
+        <div class="plan-ico" style="background:var(--warmbg)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B4471A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-8z"/></svg></div>
+        <h3>Termox+ Caldaia</h3>
+        <p class="for">Per chi ha solo la caldaia.</p>
+        <div class="price"><b>9,90 €</b><span>al mese</span></div>
+        <span class="yr">oppure 109 € all'anno</span>
+        <div class="hr"></div>
+        <ul>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Manutenzione annuale e pulizia</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Controllo fumi e bollino blu alla scadenza, contributo incluso</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Libretto aggiornato e registrazione al catasto impianti</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Guasto: tecnico entro 48 ore</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>10% di sconto sui ricambi</span></li>
+        </ul>
+        <button class="btn ghost" data-activate>Attiva</button>
+      </article>
+
+      <article class="plan hot">
+        <span class="badge">CONSIGLIATO</span>
+        <div class="plan-ico" style="background:var(--sand)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16181D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg></div>
+        <h3>Termox+ Casa</h3>
+        <p class="for">Caldaia e fino a 3 condizionatori.</p>
+        <div class="price"><b>19,90 €</b><span>al mese</span></div>
+        <span class="yr">oppure 219 € all'anno</span>
+        <div class="hr"></div>
+        <ul>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Tutto il piano Caldaia e tutto il piano Clima</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Guasto: tecnico entro 24 ore</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Manodopera di 2 riparazioni all'anno inclusa</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>15% di sconto sui ricambi</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>[€] di sconto se cambi caldaia o condizionatori con noi</span></li>
+        </ul>
+        <button class="btn" data-activate>Attiva Termox+ Casa</button>
+      </article>
+
+      <article class="plan">
+        <div class="plan-ico" style="background:var(--coldbg)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1F5FA8" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M4.9 6.5l14.2 11M4.9 17.5l14.2-11"/></svg></div>
+        <h3>Termox+ Clima</h3>
+        <p class="for">Per i condizionatori, prezzo per split.</p>
+        <div class="price"><b>4,90 €</b><span>al mese a split</span></div>
+        <span class="yr">oppure 55 € all'anno a split</span>
+        <div class="hr"></div>
+        <ul>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Sanificazione in primavera, prima del caldo</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Pulizia filtri e scarico condensa</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Controllo pressione e gas refrigerante</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Guasto d'estate: tecnico entro 48 ore</span></li>
+          <li class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>10% di sconto sui ricambi</span></li>
+        </ul>
+        <button class="btn ghost" data-activate>Attiva</button>
+      </article>
+    </div>
+  </div>
+
+  <div class="wrap sec" style="padding-bottom:0">
+    <h2>Il tuo anno con Termox+</h2>
+    <div class="year">
+      <div><span class="when">Marzo – aprile</span><b>Condizionatori</b><p>Sanificazione e controllo, prima che arrivi il caldo.</p></div>
+      <div><span class="when">Maggio – giugno</span><b>Caldaia</b><p>Manutenzione e bollino blu, a riscaldamento spento.</p></div>
+      <div><span class="when">Tutto l'anno</span><b>Guasti</b><p>Scrivi su WhatsApp e passi davanti in coda.</p></div>
+      <div><span class="when">Ottobre</span><b>Promemoria</b><p>Ti ricordiamo quando conviene accendere e cosa controllare.</p></div>
+    </div>
+  </div>
+
+  <div class="wrap sec">
+    <div class="bollino">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="eyebrow">Cos'è il bollino blu</div>
+        <h2>Il controllo obbligatorio della caldaia.</h2>
+      </div>
+      <ul>
+        <li>È il controllo di efficienza energetica: il tecnico misura i fumi e verifica che la caldaia bruci bene e in sicurezza.</li>
+        <li>A Roma va registrato nel catasto degli impianti termici. La scadenza dipende dal tipo e dalla potenza della caldaia.</li>
+        <li>Se il controllo non è in regola si rischiano sanzioni, e in caso di problemi l'assicurazione può contestare il rimborso.</li>
+        <li>Con Termox+ la scadenza la seguiamo noi: ti scriviamo un mese prima e fissiamo l'appuntamento.</li>
+      </ul>
+    </div>
+
+    <h2 style="font-size:clamp(26px,3vw,34px);margin-top:64px">Preferisci pagare solo quando serve?</h2>
+    <div class="single">
+      <div><span>Manutenzione caldaia + bollino blu</span><b>119 €</b><span>IVA e contributo inclusi</span></div>
+      <div><span>Sanificazione condizionatore</span><b>69 €</b><span>a split, IVA inclusa</span></div>
+      <div><span>Uscita per guasto</span><b>69 €</b><span>più manodopera e ricambi</span></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span><b>Termox</b>Condizionatori e caldaie a Roma, a prezzo fisso</span><span>Installazioni eseguite da [DITTA INSTALLATRICE] · P.IVA [NUMERO]</span></div></footer>
+
+<script>
+(function(){
+  var ck='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>';
+  var split=function(n,w){var s='';for(var i=0;i<n;i++)s+='<svg width="'+w+'" height="36" viewBox="0 0 '+w+' 36" fill="none" aria-hidden="true"><rect x="2" y="2" width="'+(w-4)+'" height="26" rx="7" stroke="#1F5FA8" stroke-width="3"/><path d="M12 21h'+(w-24)+'" stroke="#1F5FA8" stroke-width="3" stroke-linecap="round"/></svg>';return s;};
+  var boiler=function(h){return '<svg width="60" height="'+h+'" viewBox="0 0 60 96" fill="none" aria-hidden="true"><rect x="2" y="2" width="56" height="78" rx="8" stroke="#B4471A" stroke-width="3"/><circle cx="30" cy="56" r="8" stroke="#B4471A" stroke-width="3"/><path d="M14 20h32" stroke="#B4471A" stroke-width="3" stroke-linecap="round"/><path d="M20 80v12M40 80v12" stroke="#B4471A" stroke-width="3"/></svg>';};
+  var data={
+    clima:{h:'Il condizionatore nuovo, <span style="color:#1F5FA8">installato in 48 ore.</span>',c:'#1F5FA8',bg:'#EEF3FA',items:[
+      {n:'Monosplit 9.000 BTU',d:'Una camera o uno studio, fino a circa 25 m².',p:'890 €',pic:split(1,120)},
+      {n:'Dualsplit 9.000 + 9.000',d:'Due stanze, un solo motore esterno sul balcone.',p:'1.690 €',pic:split(2,90),hot:'IL PIÙ SCELTO A ROMA'},
+      {n:'Trialsplit 9 + 9 + 12',d:'Tutta la casa: due camere e il soggiorno.',p:'2.490 €',pic:split(3,64)}]},
+    caldaia:{h:'La caldaia nuova, <span style="color:#B4471A">con il prezzo finale subito.</span>',c:'#B4471A',bg:'#FBEFE8',items:[
+      {n:'Condensazione 24 kW',d:'Appartamento fino a circa 100 m², un bagno.',p:'1.790 €',pic:boiler(96),hot:'LA PIÙ RICHIESTA'},
+      {n:'Condensazione 28–30 kW',d:'Case più grandi o con due bagni.',p:'2.190 €',pic:boiler(108)},
+      {n:'Ibrida con pompa di calore',d:'Consuma meno gas e può rientrare negli incentivi per l\'efficienza.',p:'[PREZZO]',pic:boiler(84)+split(1,90)}]}
+  };
+  var mode='clima';
+  function setMode(m){
+    mode=m;var d=data[m];
+    document.getElementById('hero-h').innerHTML=d.h;
+    document.querySelectorAll('.toggle button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m===m?'true':'false');});
+    document.getElementById('cards').innerHTML=d.items.map(function(it){
+      return '<article class="card'+(it.hot?' hot':'')+'" style="--c:'+d.c+';--cbg:'+d.bg+'">'+(it.hot?'<span class="badge">'+it.hot+'</span>':'')+
+      '<div class="pic">'+it.pic+'</div><h3>'+it.n+'</h3><p>'+it.d+'</p><div class="price"><span>da</span><b>'+it.p+'</b></div><small>installato, IVA inclusa · o [N] rate da [€]</small><button class="btn" data-go="domande">Calcola il mio prezzo</button></article>';
+    }).join('');
+    document.querySelectorAll('.opt').forEach(function(o){o.setAttribute('aria-pressed',o.dataset.need===m?'true':'false');});
+  }
+  document.getElementById('incl').innerHTML=['Apparecchio nuovo, con garanzia del produttore','Installazione e materiali standard','Smontaggio e smaltimento del vecchio apparecchio','Lavaggio impianto e filtro (caldaie)','Dichiarazione di conformità e libretto d\'impianto','Registrazione F-Gas o catasto impianti termici','Documenti per le detrazioni fiscali','Garanzia sull\'installazione di [N] anni'].map(function(t){return '<div class="check">'+ck+'<span>'+t+'</span></div>';}).join('');
+
+  var cam='<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#5B5F66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+  var okIcon='<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>';
+  var infoIcon='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B4471A" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink:0"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>';
+
+  /* disegni delle risposte */
+  function svg(inner){return '<svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+inner+'</svg>';}
+  var motor='<rect x="15" y="12" width="20" height="14" rx="2"/><circle cx="25" cy="19" r="4"/>';
+  var boiler='<rect x="15" y="10" width="18" height="24" rx="3"/><circle cx="24" cy="25" r="3"/><path d="M19 15h10"/>';
+  function splits(n){var s='';for(var i=0;i<n;i++){s+='<rect x="8" y="'+(24-n*6+i*12)+'" width="32" height="8" rx="2"/><path d="M12 '+(30-n*6+i*12)+'h24"/>';}return svg(s);}
+  function floor(level){var y={'Piano terra':36,'1°–2°':28,'3°–5°':18,'Oltre il 5°':6}[level];return svg('<rect x="12" y="4" width="24" height="40" rx="1"/><path d="M12 14h24M12 24h24M12 34h24"/><rect x="12" y="'+y+'" width="24" height="8" fill="currentColor" opacity=".3" stroke="none"/>');}
+  function drops(n){var s='';for(var i=0;i<n;i++){var x=12+i*12-(n-1)*6+6;s+='<path d="M'+x+' 14c4 6 6 9 6 12a6 6 0 0 1-12 0c0-3 2-6 6-12z"/>';}return svg(s);}
+  function bars(n){var s='';for(var i=0;i<3;i++){s+='<rect x="'+(10+i*11)+'" y="'+(30-i*8)+'" width="7" height="'+(10+i*8)+'" rx="1"'+(i<n?' fill="currentColor" opacity=".35"':'')+'/>';}return svg(s);}
+  var ICON={
+    'Sul balcone':svg(motor+'<path d="M6 32h36M6 44h36M10 32v12M18 32v12M26 32v12M34 32v12M42 32v12"/>'),
+    'Sul terrazzo':svg('<rect x="12" y="22" width="20" height="14" rx="2"/><circle cx="22" cy="29" r="4"/><path d="M4 38h40M4 30v8M44 30v8"/>'),
+    'Su una parete esterna':svg('<path d="M4 4v40M4 12h10M4 22h10M4 32h10M9 4v8M9 22v10"/><rect x="20" y="14" width="20" height="14" rx="2"/><circle cx="30" cy="21" r="4"/><path d="M4 32l18-4"/>'),
+    'Sul tetto':svg('<path d="M4 34L24 16l20 18"/><rect x="26" y="12" width="14" height="10" rx="2"/><path d="M10 34v10h28V34"/>'),
+    'Sì':svg('<path d="M12 25l8 8 16-18"/>'),
+    'No':svg('<rect x="8" y="8" width="32" height="32" rx="2"/><path d="M8 18h32M8 28h32M20 8v10M28 18v10M20 28v12"/>'),
+    'Non so':svg('<path d="M18 18a6 6 0 1 1 8 5.6c-1.4.6-2 1.6-2 3V29"/><circle cx="24" cy="35" r="1" fill="currentColor"/>'),
+    'Da verificare':svg('<rect x="12" y="8" width="24" height="34" rx="3"/><path d="M19 8v-2h10v2M18 20h12M18 27h12M18 34h7"/>'),
+    'Camera stagna':svg(boiler+'<path d="M22 10V5h20M26 10V8h16M42 2v12"/>'),
+    'Camera aperta':svg(boiler+'<path d="M22 10V2M26 10V2M18 30h12M18 32h12"/>'),
+    'A condensazione':svg(boiler+'<path d="M24 36c3 4 4 6 4 7a4 4 0 0 1-8 0c0-1 1-3 4-7z"/>'),
+    'Meno di 8 anni':bars(1),'8–15 anni':bars(2),'Più di 15 anni':bars(3),
+    'In casa':svg('<path d="M4 22L24 6l20 16"/><path d="M8 19v25h32V19"/><rect x="18" y="24" width="12" height="14" rx="2"/>'),
+    'In un armadio a incasso':svg('<rect x="6" y="6" width="36" height="36" rx="1"/><rect x="14" y="10" width="20" height="28" rx="1"/><path d="M24 10v28"/><circle cx="21" cy="24" r="1" fill="currentColor"/><circle cx="27" cy="24" r="1" fill="currentColor"/>'),
+    'In un locale caldaia':svg('<rect x="6" y="6" width="16" height="36" rx="1"/><circle cx="18" cy="25" r="1" fill="currentColor"/>'+'<rect x="26" y="12" width="16" height="22" rx="3"/><circle cx="34" cy="26" r="3"/>'),
+    'No, ho un boiler a parte':svg('<rect x="14" y="6" width="20" height="36" rx="10"/><path d="M14 20h20"/>'),
+    'Sì, anche l\'acqua calda':svg('<path d="M8 18h18a6 6 0 0 1 6 6v4"/><path d="M8 14v8M14 12v6"/><path d="M32 34c2 3 3 5 3 6a3 3 0 0 1-6 0c0-1 1-3 3-6z"/>')
+  };
+  function iconFor(k,o){
+    if(k==='amb')return splits(+o);
+    if(k==='pia')return floor(o);
+    if(k==='bag')return drops(o==='3 o più'?3:+o);
+    if(k==='pos'&&o==='Sul balcone')return svg(boiler.replace(/y="10"/,'y="4"').replace('cy="25"','cy="19"').replace('M19 15h10','M19 9h10')+'<path d="M6 32h36M6 44h36M10 32v12M18 32v12M26 32v12M34 32v12M42 32v12"/>');
+    return ICON[o]||ICON['Non so'];
+  }
+
+  var Q={
+    clima:[
+      {k:'amb',t:'Quante stanze vuoi climatizzare?',o:['1','2','3'],d:'2'},
+      {k:'mot',t:'Dove va il motore esterno?',o:['Sul balcone','Sul terrazzo','Su una parete esterna','Sul tetto'],d:'Sul balcone'},
+      {k:'pia',t:'A che piano è la casa?',o:['Piano terra','1°–2°','3°–5°','Oltre il 5°'],d:'3°–5°'},
+      {k:'pre',t:'C\'è già la predisposizione per il condizionatore?',o:['Sì','No','Non so'],d:'No'},
+      {k:'con',t:'Il condominio permette il motore in facciata?',o:['Sì','Da verificare'],d:'Sì'}],
+    caldaia:[
+      {k:'tip',t:'Quale assomiglia alla tua caldaia?',o:['Camera stagna','Camera aperta','A condensazione','Non so'],d:'Camera stagna',h:'Camera stagna: il tubo dei fumi esce dal muro. Camera aperta: il tubo sale in una canna fumaria e sotto ha una griglia. A condensazione: ha un tubicino di scarico per l\'acqua.'},
+      {k:'ann',t:'Da quanto tempo ce l\'hai?',o:['Meno di 8 anni','8–15 anni','Più di 15 anni','Non so'],d:'Più di 15 anni'},
+      {k:'pos',t:'Dove si trova?',o:['In casa','Sul balcone','In un armadio a incasso','In un locale caldaia'],d:'Sul balcone'},
+      {k:'bag',t:'Quanti bagni ci sono?',o:['1','2','3 o più'],d:'1'},
+      {k:'acs',t:'Fa anche l\'acqua calda?',o:['Sì, anche l\'acqua calda','No, ho un boiler a parte'],d:'Sì, anche l\'acqua calda'}]
+  };
+  var ans={clima:{},caldaia:{}};
+  ['clima','caldaia'].forEach(function(m){Q[m].forEach(function(q){ans[m][q.k]=q.d;});});
+
+  var SHOTS={
+    clima:[['Parete dello split','La parete interna dove vuoi il condizionatore, da 2 metri di distanza.',false],['Dove va il motore','Balcone, terrazzo o parete esterna. Includi la ringhiera o il pavimento.',false],['Il percorso dei tubi','Il tratto tra split e motore: muri, finestre, angoli da passare.',false],['Presa o quadro elettrico','La presa più vicina allo split, oppure il quadro elettrico di casa.',false]],
+    caldaia:[['La targhetta della caldaia','L\'etichetta con marca, modello e potenza. Di solito è sotto o dietro lo sportello.',false],['La caldaia con i tubi','Tutta la caldaia e i tubi che escono sotto, da un metro di distanza.',false],['Lo scarico dei fumi','Il tubo che esce dal muro o entra nella canna fumaria. Se puoi, anche da fuori.',false],['Il termostato','Il termostato o cronotermostato che usi per accenderla.',false]]
+  };
+  var SUB={clima:'Il tecnico le guarda per confermare il prezzo: dove vanno split e motore e che strada fanno i tubi.',caldaia:'Il tecnico le guarda per confermare il prezzo: modello attuale, scarico dei fumi e collegamenti.'};
+
+  var PRICES={clima:{'1':['890 €','1.090 €','1.390 €'],'2':['1.690 €','1.990 €','2.490 €'],'3':['2.490 €','2.890 €','3.590 €']},caldaia:{'24':['1.790 €','2.090 €','2.490 €'],'28':['2.190 €','2.490 €','2.890 €']}};
+  var TIERS={
+    clima:[
+      {n:'Essenziale',cls:'classe A++',f:['Inverter, gas R32','Garanzia produttore 2 anni','Telecomando e timer']},
+      {n:'Silenzioso',cls:'classe A+++',f:['Silenzioso per la camera','Wi-Fi: lo accendi dal telefono','Garanzia produttore [N] anni'],pill:true},
+      {n:'Premium',cls:'classe A+++',f:['Filtri per aria più pulita','Wi-Fi e sensore di presenza','Garanzia produttore [N] anni']}],
+    caldaia:[
+      {n:'Essenziale',cls:'condensazione, classe A',f:['Cronotermostato incluso','Garanzia produttore 2 anni','Lavaggio impianto e filtro']},
+      {n:'Smart',cls:'condensazione, classe A',f:['Cronotermostato Wi-Fi: la accendi dal telefono','Garanzia produttore [N] anni','Lavaggio impianto e filtro'],pill:true},
+      {n:'Top',cls:'condensazione, classe A',f:['Predisposta per abbinare una pompa di calore','Garanzia produttore [N] anni','Lavaggio impianto e filtro']}]
+  };
+  var tsel=1,dsel=2;
+  var dows=['Lun','Mar','Mer','Gio','Ven'],dnum=[28,29,30,1,2],dmon=['settembre','settembre','settembre','ottobre','ottobre'],dlong=['lunedì','martedì','mercoledì','giovedì','venerdì'];
+  function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+  function capv(){return document.getElementById('cap').value||'00137';}
+  function info(){
+    var a=ans[mode];
+    if(mode==='clima'){
+      var imp={'1':'Monosplit','2':'Dualsplit','3':'Trialsplit'}[a.amb];
+      return {label:imp,prices:PRICES.clima[a.amb],model:'[Marca] '+{'1':'9.000 BTU','2':'9+9','3':'9+9+12'}[a.amb],
+        rows:[['Impianto',imp],['Stanze',a.amb],['Motore',a.mot],['Piano',a.pia],['Predisposizione',a.pre]],
+        title:'Il tuo prezzo fisso per un '+imp.toLowerCase(),
+        sub:'Motore '+a.mot.toLowerCase()+', piano '+a.pia.toLowerCase()+', CAP '+capv()+'. Tutto compreso, IVA inclusa.',extra:a.mot==='Sul tetto'};
+    }
+    var kw=a.bag==='1'?'24':'28',lab='Caldaia '+(kw==='24'?'24 kW':'28–30 kW');
+    return {label:lab,prices:PRICES.caldaia[kw],model:'[Marca] '+(kw==='24'?'24 kW':'28–30 kW'),
+      rows:[['Caldaia di oggi',a.tip],['Età',a.ann],['Dove si trova',a.pos],['Bagni',a.bag],['Nuova caldaia',lab]],
+      title:'Il tuo prezzo fisso per la caldaia nuova',
+      sub:'Sostituzione della caldaia, '+a.pos.toLowerCase()+', CAP '+capv()+'. Tutto compreso, IVA inclusa.',extra:a.tip==='Camera aperta'||a.pos==='In un locale caldaia'};
+  }
+  function drawSummary(){
+    var i=info();
+    var h='<h3>Il tuo lavoro</h3>'+i.rows.concat([['CAP',capv()]]).map(function(r){return '<div class="row"><span>'+esc(r[0])+'</span><span>'+esc(r[1])+'</span></div>';}).join('')+
+      '<div class="hr"></div><span style="font-size:14px;color:var(--muted)">Prezzo</span><span class="big">da '+i.prices[0]+'</span><p class="fine">'+
+      (i.extra?'Installato, IVA inclusa. Possibile lavoro extra: te lo diciamo prima dell\'installazione.':'Installato, IVA inclusa.')+'</p>';
+    document.querySelectorAll('.summary').forEach(function(el){el.innerHTML=h;});
+  }
+  function drawQs(){
+    var a=ans[mode];
+    document.getElementById('q-title').textContent=mode==='clima'?'Parlaci della casa':'Parlaci della caldaia di oggi';
+    document.getElementById('q-sub').textContent=mode==='clima'?'Cinque domande, basta toccare il disegno giusto. Il prezzo lo vedi subito dopo.':'Cinque domande, basta toccare il disegno giusto. Se non sai una risposta scegli "Non so": lo verifica il tecnico.';
+    document.getElementById('qs').innerHTML=Q[mode].map(function(q){
+      return '<div class="q" role="group" aria-label="'+esc(q.t)+'"><b>'+esc(q.t)+'</b>'+(q.h?'<p class="qh">'+esc(q.h)+'</p>':'')+'<div class="ocards">'+q.o.map(function(o){return '<button class="ocard" data-q="'+q.k+'" data-v="'+esc(o)+'" aria-pressed="'+(a[q.k]===o)+'">'+iconFor(q.k,o)+'<span>'+esc(o)+'</span></button>';}).join('')+'</div></div>';
+    }).join('');
+    var w='';
+    if(mode==='caldaia'&&a.tip==='Camera aperta')w='Con una caldaia a camera aperta di solito va adeguato lo scarico dei fumi. Il tecnico lo verifica dalle foto dopo la prenotazione e ti dice il costo in più prima di venire.';
+    else if(mode==='caldaia'&&a.pos==='In un locale caldaia')w='Le caldaie in un locale dedicato a volte richiedono lavori sui collegamenti. Lo verifica il tecnico dalle foto e te lo dice prima.';
+    else if(mode==='clima'&&a.mot==='Sul tetto')w='Il motore sul tetto richiede più tubi e a volte attrezzatura per lavorare in quota. Il costo in più te lo diciamo prima dell\'installazione.';
+    else if(mode==='clima'&&a.con==='Da verificare')w='Puoi prenotare lo stesso. Prima dell\'installazione ti chiediamo di confermare che il condominio è d\'accordo.';
+    var wb=document.getElementById('q-warn');wb.hidden=!w;wb.innerHTML=w?infoIcon+'<span>'+w+'</span>':'';
+    drawSummary();
+  }
+  document.getElementById('qs').addEventListener('click',function(e){var b=e.target.closest('[data-q]');if(b){ans[mode][b.dataset.q]=b.dataset.v;drawQs();}});
+  function drawTiers(){
+    var i=info();
+    document.getElementById('p-title').textContent=i.title;
+    document.getElementById('p-sub').textContent=i.sub;
+    var ex=document.getElementById('p-extra');ex.hidden=!i.extra;ex.textContent='Dalle tue risposte potrebbe servire un lavoro extra. Il tecnico lo verifica dalle foto dopo la prenotazione: se serve, ti chiamiamo con il costo e puoi annullare riavendo l\'acconto.';
+    document.getElementById('tiers').innerHTML=TIERS[mode].map(function(t,k){var s=k===tsel;
+      return '<article class="tier'+(s?' sel':'')+'">'+(t.pill?'<span class="pill">CONSIGLIATO</span>':'')+'<h3>'+t.n+'</h3><span class="m">'+i.model+' · '+t.cls+'</span><span class="big">'+i.prices[k]+'</span><span class="m">oppure [N] rate da [€]</span><div class="hr"></div>'+
+      t.f.map(function(x){return '<div class="check">'+ck+'<span>'+x+'</span></div>';}).join('')+
+      '<button class="btn '+(s?'cold':'ghost')+'" data-tier="'+k+'" aria-pressed="'+s+'">'+(s?'Selezionato':'Scegli questo')+'</button></article>';}).join('');
+    document.getElementById('sel-name').textContent=i.label+' '+TIERS[mode][tsel].n;
+    document.getElementById('sel-price').textContent=i.prices[tsel];
+  }
+  document.getElementById('tiers').addEventListener('click',function(e){var b=e.target.closest('[data-tier]');if(b){tsel=+b.dataset.tier;drawTiers();}});
+  function drawDays(){document.getElementById('days').innerHTML=dows.map(function(d,i){return '<button data-day="'+i+'" aria-pressed="'+(i===dsel)+'"><small>'+d+'</small><b>'+dnum[i]+'</b></button>';}).join('');}
+  document.getElementById('days').addEventListener('click',function(e){var b=e.target.closest('[data-day]');if(b){dsel=+b.dataset.day;drawDays();}});
+  function drawShots(){
+    var i=info(),when=dlong[dsel]+' '+dnum[dsel]+' '+dmon[dsel];
+    document.getElementById('booked-txt').textContent='Prenotazione ricevuta: '+i.label.toLowerCase()+' '+TIERS[mode][tsel].n+', '+when+'.';
+    document.getElementById('f-sub').textContent=SUB[mode];
+    document.getElementById('shots').innerHTML=SHOTS[mode].map(function(s,k){
+      return '<div class="shot'+(s[2]?' done':'')+'"><div class="thumb">'+(s[2]?okIcon:cam)+'</div><div><b>'+(k+1)+'. '+s[0]+'</b><p>'+s[1]+'</p>'+
+      (s[2]?'<span class="state">Caricata</span>':'<label class="up" for="f'+k+'">Carica foto</label><input type="file" accept="image/*" id="f'+k+'" data-i="'+k+'">')+'</div></div>';
+    }).join('');
+    document.getElementById('booking').innerHTML='<h3>La tua prenotazione</h3>'+
+      [['Lavoro',i.label+' '+TIERS[mode][tsel].n],['Prezzo fisso',i.prices[tsel]],['Giorno',when],['Fascia','Mattina 8–13'],['Acconto','[€] pagato'],['CAP',capv()]].map(function(r){return '<div class="row"><span>'+esc(r[0])+'</span><span>'+esc(r[1])+'</span></div>';}).join('')+
+      '<div class="hr"></div><p class="fine">Il tecnico guarda le foto entro [N] ore lavorative. Se tutto è come da risposte, la prenotazione è confermata al prezzo fisso. Se serve un lavoro extra ti chiamiamo: puoi accettare o annullare e riavere l\'acconto.</p>';
+    document.getElementById('send-msg').textContent='';
+  }
+  document.getElementById('shots').addEventListener('change',function(e){if(e.target.dataset.i){SHOTS[mode][+e.target.dataset.i][2]=true;drawShots();}});
+  document.getElementById('send-photos').addEventListener('click',function(){var n=SHOTS[mode].filter(function(s){return s[2];}).length;document.getElementById('send-msg').textContent=n<4?'Anteprima: hai caricato '+n+' foto su 4. Le altre puoi mandarle anche su WhatsApp.':'Anteprima: foto inviate. Il tecnico le guarda e ti conferma l\'installazione.';});
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-activate]');if(b){b.textContent='Anteprima: qui si attiva il piano';}});
+  function drawFlow(){drawQs();drawTiers();drawDays();drawShots();}
+
+  function go(v,anchor){
+    ['home','domande','foto','prezzo','cura'].forEach(function(x){document.getElementById('v-'+x).hidden=(x!==v);});
+    if(v==='domande'||v==='foto'||v==='prezzo'){drawFlow();}
+    if(anchor){var el=document.getElementById(anchor);if(el){el.scrollIntoView({behavior:'smooth'});return;}}
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-m]');if(t&&t.parentNode.classList.contains('toggle')){setMode(t.dataset.m);return;}
+    var o=e.target.closest('.opt');if(o){document.querySelectorAll('.opt').forEach(function(x){x.setAttribute('aria-pressed',x===o?'true':'false');});if(o.dataset.need!=='rip')setMode(o.dataset.need);return;}
+    var g=e.target.closest('[data-go]');if(g){if(g.dataset.mode)setMode(g.dataset.mode);go(g.dataset.go,g.dataset.anchor);}
+  });
+  document.getElementById('picker').addEventListener('submit',function(e){e.preventDefault();var c=document.getElementById('cap').value||'00137';document.querySelectorAll('.capv').forEach(function(x){x.textContent=c;});var r=document.querySelector('.opt[data-need="rip"]');go(r&&r.getAttribute('aria-pressed')==='true'?'cura':'domande');});
+
+  setMode('clima');drawFlow();
+})();
+</script>
+
+</body></html>
